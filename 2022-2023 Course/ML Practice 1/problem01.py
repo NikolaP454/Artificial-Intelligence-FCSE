@@ -11,11 +11,11 @@ Problem:
 
 '''
 
-'''Quiz Limitation'''
+# Quiz Limitation
 import os
 os.environ['OPENBLAS_NUM_THREADS'] = '1'
 
-'''Imports'''
+# Imports
 import numpy as np
 import pandas as pd
 
@@ -27,7 +27,19 @@ from sklearn.metrics import accuracy_score
 
 from typing import List
 
+
 def main(dataset: List[List[str]]) -> None:
+    """
+    Trains a Naive Bayes classifier on the given data and makes predictions on new data.
+    Prints the results of the model evaluation and the predictions.
+
+    Args:
+        data (List[List[str]]): Train-Test data.
+
+    Returns:
+        None
+    """
+    
     # Data Split
     X = pd.DataFrame([row[:-1] for row in dataset])
     y = pd.Series([row[-1] for row in dataset])
