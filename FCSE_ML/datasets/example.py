@@ -1,6 +1,6 @@
 import pandas as pd
 
-from core.dataset.dataset import Dataset
+from core.dataset import Dataset
 
 class Example(Dataset):
     
@@ -32,4 +32,6 @@ class Example(Dataset):
     def info(self) -> str:
         return self.data.info()
     
+    def load_data(self, df: pd.DataFrame) -> None:
+        self.data = df
     
