@@ -35,16 +35,25 @@ class ColumnDropper(BaseEstimator, TransformerMixin):
         return X
     
 
-def main(dataset: List[List]) -> None:
-    test_size, leaves, num_of_trees = int(input()), int(input()), int(input())
-    
-    ### Data Splitting
+def data_split(dataset: List[List], samples_in_test: int) -> Tuple:
+    '''
+    Splits the dataset into training and testing sets.
+    '''
     
     X = [row[:-1] for row in dataset]
     y = [row[-1] for row in dataset]
     
     # In reverse because we want the first N samples to be in the testing set
-    X_test, X_train, y_test, y_train = train_test_split(X, y, train_size=test_size, shuffle=False)
+    return train_test_split(X, y, train_size=samples_in_test, shuffle=False)
+
+
+def main(dataset: List[List]) -> None:
+    test_size, leaves, num_of_trees = int(input()), int(input()), int(input())
+    
+    ### Data Split
+    
+    # In reverse because we want the first N samples to be in the testing set
+    X_test, X_train, y_test, y_train = data_split(dataset, test_size)
     
     ### Base Model
 
@@ -62,8 +71,8 @@ def main(dataset: List[List]) -> None:
     ### Find best feature
     
     feature_finder = DecisionTreeClassifier(
-        max_leaf_nodes = leaves,
-        random_state = 0
+        max_leaf_nodes=leaves,
+        random_state=0
     )
     
     feature_finder.fit(X_train, y_train)
